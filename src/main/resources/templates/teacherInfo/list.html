@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>教师列表</title>
+		<script type="text/javascript">
+			$(function() {
+				$(".delete-obj-href").deleteFun();
+			});
+		</script>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+
+		<div class="header lighter smaller blue">
+			<h3><span class="glyphicon glyphicon-th-list"></span>&nbsp;教师列表（共<span th:text="${datas.getTotalElements()}"></span>位教师）</h3>
+			<div th:replace="teacherInfo/nav :: content" th:remove="tag"></div>
+		</div>
+
+		<div class="table-responsive">
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>工号</th>
+
+						<th>教师姓名</th>
+
+						<th>性别</th>
+
+						<th>年龄</th>
+
+						<th>学院</th>
+
+						<th>电话号码</th>
+
+						<th>操作</th>
+
+					</tr>
+				</thead>
+				<tr th:each="obj : ${datas}">
+
+					<td th:text="${obj.jobNumber}"></td>
+
+					<td th:text="${obj.teacherName}"></td>
+
+					<td th:switch="${obj.gender}">
+						<span th:case="1">男</span>
+						<span th:case="2">女</span>
+					</td>
+
+					<td th:text="${obj.age}"></td>
+
+					<td th:switch="${obj.college}">
+						<span th:case="1">经济管理学院</span>
+						<span th:case="2">畜牧兽医学院</span>
+						<span th:case="3">园林园艺学院</span>
+						<span th:case="4">工程学院</span>
+						<span th:case="5">农学与生物技术学院</span>
+					</td>
+
+					<td th:text="${obj.phone}"></td>
+
+					<td>
+						<div class="action-buttons">
+							<a style="text-decoration:none" class="green auth1" sn="TeacherInfoController.update" title="修改" th:href="'/teacherInfo/update/'+${obj.id}">
+								<button type="button" class="btn btn-default">修改</button>
+							</a>
+
+							<a class="delete-obj-href red auth1" sn="TeacherInfoController.delete" th:title="'此操作不可逆，确定删除吗？'" th:href="'/teacherInfo/delete/'+${obj.id}">
+								<button type="button" class="btn btn-default">删除</button>
+							</a>
+						</div>
+					</td>
+				</tr>
+
+			</table>
+			<div th:include="fragments/page :: pager" th:remove="tag"></div>
+		</div>
+		</div>
+	</body>
+</html>

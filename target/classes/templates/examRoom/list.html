@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>考场列表</title>
+		<script type="text/javascript">
+			$(function() {
+				$(".delete-obj-href").deleteFun();
+			});
+		</script>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+
+		<div class="header lighter smaller blue">
+			<h3><span class="glyphicon glyphicon-th-list"></span>&nbsp;考场列表（共<span th:text="${datas.getTotalElements()}"></span>个考场）</h3>
+			<div th:replace="examRoom/nav :: content" th:remove="tag"></div>
+		</div>
+
+		<div class="table-responsive">
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+
+						<th>考试地点</th>
+
+						<th>考场容量</th>
+
+						<th>考场类型</th>
+
+						<th>操作</th>
+
+					</tr>
+				</thead>
+				<tr th:each="obj : ${datas}">
+
+					<td th:text="${obj.examAddress}"></td>
+
+					<td th:text="${obj.personNum}"></td>
+
+					<td th:text="${obj.roomType==1?'教室':'机房'}"></td>
+
+					<td>
+						<div class="action-buttons">
+							<a style="text-decoration:none" class="green auth1" sn="ExamRoomController.update" title="修改" th:href="'/examRoom/update/'+${obj.id}">
+								<button type="button" class="btn btn-default">修改</button>
+							</a>
+
+							<a class="delete-obj-href red auth1" sn="ExamRoomController.delete" th:title="'此操作不可逆，确定删除吗？'" th:href="'/examRoom/delete/'+${obj.id}">
+								<button type="button" class="btn btn-default">删除</button>
+							</a>
+						</div>
+					</td>
+				</tr>
+
+			</table>
+			<div th:include="fragments/page :: pager" th:remove="tag"></div>
+		</div>
+		</div>
+	</body>
+</html>

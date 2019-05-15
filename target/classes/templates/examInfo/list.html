@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>考试列表</title>
+		<script type="text/javascript">
+			$(function() {
+				$(".delete-obj-href").deleteFun();
+			});
+		</script>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+
+		<div class="header lighter smaller blue">
+			<h3><span class="glyphicon glyphicon-th-list"></span>&nbsp;考试列表（共创建<span th:text="${datas.getTotalElements()}"></span>场考试）</h3>
+			<div th:replace="examInfo/nav :: content" th:remove="tag"></div>
+		</div>
+
+		<div class="table-responsive">
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+
+						<!--<th>考试id</th>-->
+
+						<th>试卷名称</th>
+
+						<th>考试地点</th>
+
+						<th>监考老师</th>
+
+						<th>考试开始时间</th>
+
+						<th>考试结束时间</th>
+
+						<th>考试状态</th>
+
+						<th>操作</th>
+
+					</tr>
+				</thead>
+				<tr th:each="obj : ${datas}">
+
+					<!--<td th:text="${obj.examInfoId}"></td>-->
+
+					<td th:text="${obj.examName}"></td>
+
+					<td th:text="${obj.examRoomName}"></td>
+
+					<td th:text="${obj.examTeacher}"></td>
+
+					<td th:text="${obj.startDate}"></td>
+
+					<td th:text="${obj.endDate}"></td>
+
+					<!--<td th:text="${#dates.format(obj.startDate, 'yyyy-MM-dd')}"></td>
+
+					<td th:text="${#dates.format(obj.endDate, 'yyyy-MM-dd')}"></td>-->
+
+					<td th:switch="${obj.examStatus}">
+						<span th:case="0">已结束</span>
+						<span th:case="1">未开始</span>
+						<span th:case="2">进行中</span>
+
+					</td>
+
+					<td>
+						<div class="action-buttons">
+							<a style="text-decoration:none" class="green auth1" sn="ExamInfoController.update" title="设置学生" th:href="'/examAddStudent/list/'+${obj.id}">
+								<button type="button" class="btn btn-default">设置学生</button>
+							</a>
+
+							<a class="delete-obj-href red auth1" sn="ExamInfoController.delete" th:title="'此操作不可逆，确定删除吗？'" th:href="'/examInfo/delete/'+${obj.id}">
+								<button type="button" class="btn btn-default">删除</button>
+							</a>
+						</div>
+					</td>
+				</tr>
+
+			</table>
+			<div th:include="fragments/page :: pager" th:remove="tag"></div>
+		</div>
+		</div>
+	</body>
+</html>

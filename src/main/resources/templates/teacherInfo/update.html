@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>更新教师</title>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+
+			<div class="header lighter smaller blue">
+				<h3><span class="glyphicon glyphicon-th-list"></span>&nbsp;更新教师</h3>
+				<div th:replace="teacherInfo/nav :: content" th:remove="tag"></div>
+			</div>
+
+			<form method="POST" th:object="${teacherInfo}" id="dataForm">
+
+				<!--
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">老师id：</div>
+						<input name="teacherId" type="text" class="form-control" th:value="${teacherInfo.teacherId}" placeholder="请输入老师id" />
+					</div>
+				</div>
+				-->
+
+				<input name="id" type="hidden" class="form-control" th:value="${teacherInfo.id}" />
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">工号：</div>
+						<input name="jobNumber" type="text" class="form-control" th:value="${teacherInfo.jobNumber}" placeholder="请输入工号" />
+					</div>
+				</div>
+
+
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">教师姓名：</div>
+						<input name="teacherName" type="text" class="form-control" th:value="${teacherInfo.teacherName}" placeholder="请输入教师姓名" />
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">性别：</div>
+						<!--<input name="gender" type="text" class="form-control" th:value="${examPerson.gender}" placeholder="请输入性别" />-->
+						<div class="form-group">
+							<select th:field="${teacherInfo.gender}" th:value="${teacherInfo.gender}" name="gender"  class="form-control">
+								<option th:selected="${teacherInfo.gender=='1'}" value="1" >男</option>
+								<option th:selected="${teacherInfo.gender=='2'}" value="2">女</option>
+							</select>
+						</div>
+
+					</div>
+				</div>
+
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">年龄：</div>
+						<input name="age" type="text" class="form-control" th:value="${teacherInfo.age}" placeholder="请输入年龄" />
+					</div>
+				</div>
+
+
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">电话号码：</div>
+						<input name="phone" type="text" class="form-control" th:value="${teacherInfo.phone}" placeholder="请输入电话号码" />
+					</div>
+				</div>
+
+
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">选择学院：</div>
+						<div class="form-group">
+							<select th:field="${teacherInfo.college}" th:value="${teacherInfo.college}" name="college"  class="form-control">
+								<option th:selected="${teacherInfo.college=='1'}" value="1" >经济管理学院</option>
+								<option th:selected="${teacherInfo.college=='2'}" value="2">畜牧兽医学院</option>
+								<option th:selected="${teacherInfo.college=='3'}" value="3">园林园艺学院</option>
+								<option th:selected="${teacherInfo.college=='4'}" value="4">工程学院</option>
+								<option th:selected="${teacherInfo.college=='5'}" value="5">农学与生物技术学院</option>
+							</select>
+
+						</div>
+					</div>
+				</div>
+
+
+				<input type="hidden" name="token" value="${session.token}"/>
+				<button type="submit" class="btn btn-primary">确定提交</button>
+			</form>
+
+		</div>
+	</body>
+</html>

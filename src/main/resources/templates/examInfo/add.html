@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>创建考试</title>
+
+		<script type="text/javascript" >
+
+			//日期选择
+			layui.use('laydate', function(){
+			  var laydate = layui.laydate;
+
+			  //执行一个laydate实例
+			  laydate.render({
+				elem: '#startDate' //指定元素
+				,type:'datetime'
+				,format: 'yyyy-MM-dd HH:mm' //可任意组合
+				,done: function(value, date, endDate){
+					//$("#examRoomName").val(value);设置考场名称
+
+					/*console.log(value); //得到日期生成的值，如：2017-08-18
+					console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+					console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上*/
+			  	}
+			  });
+			});
+
+			//考试结束日期选择
+			layui.use('laydate', function(){
+			  var laydate = layui.laydate;
+
+			  //执行一个laydate实例
+			  laydate.render({
+				elem: '#endDate' //指定元素
+				,type:'datetime'
+				,format: 'yyyy-MM-dd HH:mm'
+			  });
+			});
+
+			//layui表单模块加载   带搜索的下拉框
+			layui.use('form', function () {
+				var form = layui.form;
+
+				//选择考试地点
+				form.on('select(examRoom)', function(data){
+				  //获取选中德option的Text值
+				  var v = data.elem[data.elem.selectedIndex].text
+				  $("#examRoomName").val(v);
+				  /*console.log(data.elem); //得到select原始DOM对象
+				  console.log(data.value); //得到被选中的值
+				  console.log(data.othis); //得到美化后的DOM对象*/
+				});
+			});
+
+
+			//模态框添加教师,获取选择的老师的id
+			$(document).ready(function(){
+			  $("#btnAddTeacher").click(function(){
+			  	//第一位教师
+				var teacherOneId = $("#teacherOne").val();//获取选中的teacherId
+				if(teacherOneId!=""){
+					var addHtml = '<input id="oneTeacherId" type="hidden" name="oneTeacherId"/>';
+					$("#hiddenDiv").append(addHtml);
+					$("#oneTeacherId").val(teacherOneId);//设置隐藏的input的值
+					var teacherOneText = $("#teacherOne").find("option:selected").text();//获取选中的教师文本姓名
+				}
+
+				//第二位教师
+				var teacherTwoId = $("#teacherTwo").val();//获取选中teacherId
+				if(teacherTwoId!=""){
+					var addHtml = '</br><input id="twoTeacherId" type="hidden" name="twoTeacherId" />';
+					$("#hiddenDiv").append(addHtml);
+					$("#twoTeacherId").val(teacherTwoId);//设置隐藏的input的值
+					var teacherTwoText = $("#teacherTwo").find("option:selected").text();//获取选中的教师文本姓名
+				}
+				//第三位教师
+				var teacherThreeId = $("#teacherThree").val()//获取选中teacherId
+				if(teacherThreeId!=""){
+					var addHtml = '</br><input id="threeTeacherId" type="hidden" name="threeTeacherId"/>';
+					$("#hiddenDiv").append(addHtml);
+					$("#threeTeacherId").val(teacherThreeId);//设置隐藏的input的值
+					var teacherThreeText = $("#teacherThree").find("option:selected").text();//获取选中的教师文本姓名
+				}
+				var teacherText = "";
+				if(teacherOneId!=""){
+					teacherText+=teacherOneText;
+				}
+				if(teacherTwoId!=""){
+					if(teacherOneId==""){
+						teacherText=teacherText+teacherTwoText;
+					}else{
+						teacherText=teacherText+","+teacherTwoText;
+					}
+				}
+				if(teacherThreeId!=""){
+					if(teacherOneId==""&&teacherTwoId==""){
+						teacherText=teacherText+teacherThreeText;
+					}
+					if(teacherOneId!=""&&teacherTwoId==""){
+						teacherText=teacherText+","+teacherThreeText;
+					}
+					if(teacherOneId==""&&teacherTwoId!=""){
+						teacherText=teacherText+","+teacherThreeText;
+					}
+					if(teacherOneId!=""&&teacherTwoId!=""){
+						teacherText=teacherText+","+teacherThreeText;
+					}
+				}
+				$("#examTeacher").val(teacherText);
+
+				//隐藏模态框
+				$(function () { $('#myModal').modal('hide')});
+			  });
+			});
+
+		</script>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+
+			<div class="header lighter smaller blue">
+				<h3><span class="glyphicon glyphicon-th-list"></span>创建考试</h3>
+				<div th:replace="examInfo/nav :: content" th:remove="tag"></div>
+			</div>
+
+
+
+			<form  th:action="@{/examInfo/add}" method="POST" th:object="${examInfo}" id="dataForm">
+				<!--&lt;!&ndash;监考教师一二三&ndash;&gt;&ndash;&gt;
+				<input id="oneTeacherId" type="hidden" name="oneTeacherId" />
+				<input id="twoTeacherId" type="hidden" name="twoTeacherId" />
+				<input id="threeTeacherId" type="hidden" name="threeTeacherId"/>
+				&lt;!&ndash;考场名称&ndash;&gt;-->
+				<input id="examRoomName" type="hidden" name="examRoomName"/>
+				<div id="hiddenDiv">
+
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">试卷名称：</div>
+						<input name="examName" type="text" class="form-control" th:value="${examInfo.examName}" placeholder="请输入试卷名称" style="width:471px;"/>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group" >
+						<div class="input-group-addon">考试地点：</div>
+						<!--<input name="exam_room_id" type="text" class="form-control" th:value="${examInfo.examRoomId}" placeholder="请选择考试地点" />-->
+							<div class="layui-inline">
+								<div class="layui-form" style="width:471px;" >
+										<select  lay-filter="examRoom" class="layui-input" name="examRoomId" lay-verify="required" lay-search="true">
+											<option value="">直接选择或搜索选择</option>
+											<option th:each="examRoom,examRoomList:${examRoomList}" th:value="${examRoom.id}" th:text="${examRoom.examAddress}"></option>
+										</select>
+								</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">监考老师：</div>
+						<input id="examTeacher" name="examTeacher" type="text" class="form-control"  placeholder="请选择监考老师" style="width:400px;margin-right:5px;" />
+						<!--Button trigger modal-->
+						<button  type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+							添加
+						</button>
+						<!--<button type="button" id="testBtn">弹出</button>-->
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">考试开始时间：</div>
+						<div class="layui-inline" style="width:443px;">
+							<input id="startDate"  name="startDate" type="text" class="form-control layui-input select-datetime"  placeholder="请选择开始时间" />
+							<!--th:value="${#dates.format(examInfo.startDate, 'yyyy-MM-dd')}"-->
+						</div>
+					</div>
+				</div>
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">考试结束时间：</div>
+						<div class="layui-inline" style="width:443px;">
+							<input id="endDate"  name="endDate" type="text" class="form-control layui-input select-datetime"  placeholder="请选择结束时间" />
+						</div>
+					</div>
+				</div>
+
+				<input type="hidden" name="token" value="${session.token}"/>
+				<button type="submit" class="btn btn-primary">确定提交</button>
+
+				<!-- 模态选择监考老师 -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">选择监考老师</h4>
+							</div>
+
+							<div class="input-group-addon" style="color:red">*提示：监考老师至少选择一个，最多选择三个</div>
+
+							<div class="form-group form-group-lg">
+								<div class="input-group" style="margin-left:90px;margin-top:20px">
+									<div class="input-group-addon">请选择第一位监考老师：</div>
+									<!--<input name="exam_room_id" type="text" class="form-control" th:value="${examInfo.examRoomId}" placeholder="请选择考试地点" />-->
+									<div class="layui-inline">
+
+										<div class="layui-form">
+											<select id="teacherOne" class="layui-input" name="modules" lay-verify="required" lay-search="true">
+												<option value="">直接选择或搜索选择</option>
+												<option th:each="teacher,teacherInfoList:${teacherInfoList}" th:value="${teacher.id}" th:text="${teacher.teacherName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group form-group-lg">
+								<div class="input-group" style="margin-left:90px;">
+									<div class="input-group-addon">请选择第二位监考老师：</div>
+									<!--<input name="exam_room_id" type="text" class="form-control" th:value="${examInfo.examRoomId}" placeholder="请选择考试地点" />-->
+									<div class="layui-inline">
+
+										<div class="layui-form">
+											<select id="teacherTwo" class="layui-input" name="modules" lay-verify="required" lay-search="true">
+												<option value="">直接选择或搜索选择</option>
+												<option th:each="teacher,teacherInfoList:${teacherInfoList}" th:value="${teacher.id}" th:text="${teacher.teacherName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group form-group-lg">
+								<div class="input-group" style="margin-left:90px;">
+									<div class="input-group-addon">请选择第三位监考老师：</div>
+									<!--<input name="exam_room_id" type="text" class="form-control" th:value="${examInfo.examRoomId}" placeholder="请选择考试地点" />-->
+									<div class="layui-inline">
+
+										<div class="layui-form">
+											<select id="teacherThree" class="layui-input" name="modules" lay-verify="required" lay-search="true">
+												<option value="">直接选择或搜索选择</option>
+												<option th:each="teacher,teacherInfoList:${teacherInfoList}" th:value="${teacher.id}" th:text="${teacher.teacherName}"></option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+								<button id="btnAddTeacher" type="button" class="btn btn-primary">添加</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+
+		</div>
+
+
+
+	</body>
+</html>

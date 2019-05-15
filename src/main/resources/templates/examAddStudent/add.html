@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>更新考生</title>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+
+			<div class="header lighter smaller blue">
+				<h3><span class="glyphicon glyphicon-th-list"></span>&nbsp;添加考生</h3>
+				<div th:replace="examAddStudent/nav :: content" th:remove="tag"></div>
+			</div>
+
+			<form method="POST" th:object="${examAddStudent}" id="dataForm">
+
+		<!--		<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">id：</div>
+						<input name="examAddStudentId" type="text" class="form-control" th:value="${examAddStudent.examAddStudentId}" placeholder="请输入id" />
+					</div>
+				</div>-->
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">姓名：</div>
+						<input name="personName" type="text" class="form-control" th:value="${examAddStudent.personName}" placeholder="请输入姓名" />
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">学号：</div>
+						<input name="stuNumber" type="text" class="form-control" th:value="${examAddStudent.stuNumber}" placeholder="请输入学号" />
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">性别：</div>
+						<!--<input name="gender" type="text" class="form-control" th:value="${examAddStudent.gender}" placeholder="请输入性别" />-->
+						<div class="form-group">
+							<select name="gender" class="form-control">
+								<option value="">请选择</option>
+								<option value="1" >男</option>
+								<option value="2">女</option>
+
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">身份证号：</div>
+						<input name="idCard" type="text" class="form-control" th:value="${examAddStudent.idCard}" placeholder="请输入身份证号" />
+					</div>
+				</div>
+
+				<div class="form-group form-group-lg">
+					<div class="input-group">
+						<div class="input-group-addon">选择学院：</div>
+						<!--<input name="gender" type="text" class="form-control" th:value="${examAddStudent.gender}" placeholder="请输入性别" />-->
+						<div class="form-group">
+							<select name="college" class="form-control">
+								<option value="">请选择学院</option>
+								<option  value="1">经济管理学院</option>
+								<option  value="2" >畜牧兽医学院</option>
+								<option  value="3" >园林园艺学院</option>
+								<option  value="4" >工程学院</option>
+								<option  value="5" >农学与生物技术学院</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+
+				<input type="hidden" name="token" value="${session.token}"/>
+				<button type="submit" class="btn btn-primary">确定提交</button>
+			</form>
+
+		</div>
+	</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="fragments/adminModel">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>考生列表</title>
+		<script type="text/javascript">
+			$(function() {
+				$(".delete-obj-href").deleteFun();
+			});
+
+			$(document).ready(function(){
+			  $("#addOneBtn").click(function(){
+				 $.ajax({
+					 type: "POST",
+					 url: "/examAddStudent/addOne/{examId}/{stuNumber}",
+					 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+					 data: {examId:$("#examId").val(), stuNumber:$("#stuNumber").val()},
+					 dataType: "json",
+					 success: function(data){
+								 console.log(data);
+							  },
+					 error:function(e){
+								 console.log(e);
+					 }
+				 });
+			  });
+			});
+		</script>
+	</head>
+	<body>
+		<div th:fragment="content" th:remove="tag">
+
+		<div class="header lighter smaller blue">
+			<h3><span class="glyphicon glyphicon-th-list"></span>&nbsp;考生列表（共<span th:text="${datas.getTotalElements()}"></span>位考生）</h3>
+			<div th:replace="examAddStudent/nav :: content" th:remove="tag"></div>
+		</div>
+
+		<div class="table-responsive">
+
+			<table class="table table-hover">
+				<thead>
+					<tr>
+
+						<th>姓名</th>
+
+						<th>学号</th>
+
+						<th>性别</th>
+
+						<th>身份证号</th>
+
+						<th>所在学院</th>
+
+						<th>操作</th>
+
+					</tr>
+				</thead>
+				<tr th:each="obj : ${datas}">
+
+					<td th:text="${obj.personName}"></td>
+
+					<td th:text="${obj.stuNumber}"></td>
+
+					<td th:text="${obj.gender==1?'男':'女'}"></td>
+
+					<td th:text="${obj.idCard}"></td>
+
+					<td th:switch="${obj.college}">
+						<span th:case="1">经济管理学院</span>
+						<span th:case="2">畜牧兽医学院</span>
+						<span th:case="3">园林园艺学院</span>
+						<span th:case="4">工程学院</span>
+						<span th:case="5">农学与生物技术学院</span>
+					</td>
+
+					<td>
+						<div class="action-buttons">
+							<!--<a style="text-decoration:none"  class="green auth1" sn="ExamPersonController.update" title="修改" th:href="'/examPerson/update/'+${obj.id}">
+								<button type="button" class="btn btn-default">修改</button>
+							</a>-->
+
+							<a class="delete-obj-href red auth1" sn="ExamAddStudentController.delete" th:title="'此操作不可逆，确定删除吗？'" th:href="'/examAddStudent/delete/'+${obj.id}">
+								<button type="button" class="btn btn-default">删除</button>
+							</a>
+						</div>
+					</td>
+				</tr>
+
+			</table>
+
+			<!-- 添加单个考生模态框（Modal） -->
+			<div class="modal fade" id="addOneModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="addOneModalLabel">
+								单个考生添加
+							</h4>
+						</div>
+						<div class="modal-body">
+
+							<form  th:action="@{'/examAddStudent/addOne/'+${examId}+'/'+${stuNumber}}" method="POST" id="addOneForm">
+							<!--<form  th:action="@{/examAddStudent/addOne(examId=${examId},stuNumber=stuNumber)}" method="POST" id="addOneForm">-->
+								<div class="form-group form-group-lg">
+									<div class="input-group">
+										<div class="input-group-addon">学号：</div>
+										<input id="stuNumber" name="stuNumber" type="text" class="form-control"  placeholder="请输入学号" />
+										<input id="examId" name="examId" type="hidden" class="form-control" th:value="${examId}"/>
+									</div>
+								</div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                    <button id="addOneBtn" type="button" class="btn btn-primary">
+                                        提交
+                                    </button>
+                                </div>
+							</form>
+						</div>
+
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+
+			<!-- 批量添加考生模态框（Modal） -->
+			<div class="modal fade" id="addLisiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								&times;
+							</button>
+							<h4 class="modal-title" id="addLisiModalLabel">
+								批量添加考生
+							</h4>
+						</div>
+						<div class="modal-body">
+							<form  th:action="@{'/examAddStudent/addOne/'+${examId}}" method="POST" id="addListForm">
+								<div class="form-group form-group-lg">
+									<div class="input-group">
+										<div class="input-group-addon">学号：</div>
+										<input name="stuNumber" type="text" class="form-control"  placeholder="请输入学号" />
+										<input name="examId" type="hidden" class="form-control" th:value="${examId}"/>
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+									</button>
+									<button type="submit" class="btn btn-primary">
+										提交
+									</button>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+							</button>
+							<button type="submit" class="btn btn-primary">提交</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+
+
+			<div th:include="fragments/page :: pager" th:remove="tag"></div>
+		</div>
+		</div>
+	</body>
+</html>

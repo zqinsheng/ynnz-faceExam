@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="content">
+<div class="ace-settings-container" id="ace-settings-container">
+<ul class="pagination">
+    <li><button class="btn btn-info"><a style="color:white;text-decoration:none;" class="auth1"  href="/examInfo/list"><span class="glyphicon glyphicon-align-justify
+glyphicon "></span>返回考试管理</a></button></li>
+    <!-- 按钮触发模态框 -->
+    <button class="btn btn-primary" data-toggle="modal" data-target="#addOneModal">
+        +单个添加考生
+    </button>
+    <button class="btn btn-success" data-toggle="modal" data-target="#addLisiModal">
+        +批量添加考生
+    </button>
+    <button class="btn btn-danger">
+        清空所有考生
+    </button>
+    <!--<li><a class="auth1" sn="ExamAddStudentController.addOne" href="/examAddStudent/addOne"><span class="glyphicon glyphicon-plus"></span>单个添加考生</a></li>
+    <li><a class="auth1" sn="ExamAddStudentController.addList" href="/examAddStudent/addList"><span class="glyphicon glyphicon-plus"></span>批量添加考生</a></li>
+    <li><a class="auth1" sn="ExamAddStudentController.deteleAllStudent" href="/examAddStudent/deteleAllStudent"><span class="glyphicon glyphicon-remove"></span>清空所有考生</a></li>-->
+</ul></div></div></body></html>
