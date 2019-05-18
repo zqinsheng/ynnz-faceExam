@@ -37,6 +37,8 @@
 
 						<th>所在学院</th>
 
+						<th>班级</th>
+
 						<th>操作</th>
 
 					</tr>
@@ -58,6 +60,8 @@
 						<span th:case="4">工程学院</span>
 						<span th:case="5">农学与生物技术学院</span>
 					</td>
+
+					<td th:text="${obj.classesName}"></td>
 
 					<td>
 						<div class="action-buttons">

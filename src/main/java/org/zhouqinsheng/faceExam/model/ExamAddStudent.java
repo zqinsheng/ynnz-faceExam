@@ -50,6 +50,36 @@ public class ExamAddStudent {
 	@Column(name = "exam_info_id")
 	private int examInfoId;
 
+	/**
+	 * 班级
+	 * @return
+	 */
+	@Column(name = "classes_name")
+	private  String classesName;
+
+	/**
+	 * 上传头像路径
+	 * @return
+	 */
+	@Column(name = "image_url")
+	private  String imageUrl;
+
+	public String getClassesName() {
+		return classesName;
+	}
+
+	public void setClassesName(String classesName) {
+		this.classesName = classesName;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	public String getCollege() {
 		return college;
 	}

@@ -43,8 +43,25 @@ public class ExamPerson {
 	@Column(name = "stu_number")
 	private String stuNumber;
 
-	//学院
+	/**学院
+	 *
+	 */
 	private String college;
+
+	/**
+	 * 班级
+	 * @return
+	 */
+	@Column(name = "classes_name")
+		private  String classesName;
+
+	public String getClassesName() {
+		return classesName;
+	}
+
+	public void setClassesName(String classesName) {
+		this.classesName = classesName;
+	}
 
 	public String getCollege() {
 		return college;

@@ -46,6 +46,7 @@ public class ExamAddStudentService implements IExamAddStudentService {
 		examAddStudentRepository.delete(id);
 	}
 	/**
+	 *
 	 * 加载考生对象
 	 * 
 	 */
@@ -68,5 +69,24 @@ public class ExamAddStudentService implements IExamAddStudentService {
 	@Override
 	public Page<ExamAddStudent> find(Pageable page) {
 		 return examAddStudentRepository.findAll(page);
+	}
+
+	/**
+	通过考试id进行分页
+	 */
+	@Override
+	public Page<ExamAddStudent> findAllByExamId(Pageable page, int examId) {
+		return  examAddStudentRepository.findAllByExamId(examId,page);
+	}
+
+	/**
+	 * 清空所有考试关联的学生
+	 * @param examId
+	 */
+
+	@Transactional
+	@Override
+	public int deleteAll(int examId) {
+		  return examAddStudentRepository.deleteByExamInfoId(examId);
 	}
 }

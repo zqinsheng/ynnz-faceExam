@@ -7,26 +7,138 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<title>考生列表</title>
-		<script type="text/javascript">
+		<script type="text/javascript" th:inline="javascript">
 			$(function() {
 				$(".delete-obj-href").deleteFun();
 			});
 
+			//添加单个考生
 			$(document).ready(function(){
 			  $("#addOneBtn").click(function(){
 				 $.ajax({
 					 type: "POST",
-					 url: "/examAddStudent/addOne/{examId}/{stuNumber}",
-					 contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-					 data: {examId:$("#examId").val(), stuNumber:$("#stuNumber").val()},
+					 url: "/examAddStudent/addOne/"+$("#examId").val()+"/"+$("#stuNumber").val(),
+					 //contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+					 //data: {examId:$("#examId").val(), stuNumber:$("#stuNumber").val()},
 					 dataType: "json",
 					 success: function(data){
-								 console.log(data);
+								if(data=="1"){
+									layer.msg('添加成功!', {
+									  icon: 1,
+									  time: 1000 //2秒关闭（如果不配置，默认是3秒）
+									}, function(){
+										 window.location.href = "/examAddStudent/list/"+[[${examId}]];
+									});
+
+								}else if(data=="0"){
+									layer.msg('添加失败!', {
+									  icon: 5,
+									  time: 1000 //2秒关闭（如果不配置，默认是3秒）
+									}, function(){
+										 window.location.href = "/examAddStudent/list/"+[[${examId}]];
+									});
+								}
+							  },
+					 error:function(e){
+
+					 }
+				 });
+			  });
+			});
+
+
+
+			//用中文分号替换英文分号、中英文逗号或者回车
+			function ReplaceSeperator(mobiles) {
+				var i;
+				var result = "";
+				var c;
+				for (i = 0; i < mobiles.length; i++) {
+					c = mobiles.substr(i, 1);
+					if (c == ";" || c == "," || c == "，" || c == "\n")
+						result = result + "；";
+					else if (c != "\r")
+						result = result + c;
+				}
+				return result;
+			}
+
+
+
+			//批量添加考生
+			$(document).ready(function(){
+			  $("#addListBtn").click(function(){
+			    //获取批量学号
+			  	var txt = $("#txtAreaNumber").val();
+			  	//将回车符换成;
+			  	var txt2 = ReplaceSeperator(txt);
+				 $.ajax({
+					 type: "POST",
+					 url: "/examAddStudent/addListStu/"+txt2+"/"+$("#examId").val(),
+					 //contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+					 //data: {examId:$("#examId").val(), stuNumber:$("#stuNumber").val()},
+					 dataType: "json",
+					 success: function(data){
+								if(data=="1"){
+									layer.msg('添加成功!', {
+									  icon: 1,
+									  time: 1000 //2秒关闭（如果不配置，默认是3秒）
+									}, function(){
+										 window.location.href = "/examAddStudent/list/"+[[${examId}]];
+									});
+
+								}else if(data=="0"){
+									layer.msg('添加失败!', {
+									  icon: 5,
+									  time: 1000 //2秒关闭（如果不配置，默认是3秒）
+									}, function(){
+										 window.location.href = "/examAddStudent/list/"+[[${examId}]];
+									});
+								}
 							  },
 					 error:function(e){
 								 console.log(e);
 					 }
 				 });
+			  });
+			});
+
+			//清空所有考生
+			$(document).ready(function(){
+			  $("#deteleAllStuBtn").click(function(){
+			  	layer.confirm('确定清空所有考生吗？', {
+					  btn: ['清空','取消'] //按钮
+					}, function(){
+						 $.ajax({
+							 type: "POST",
+							 url: "/examAddStudent/deleteAll/"+$("#examId").val(),
+							 //contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+							 //data: {examId:$("#examId").val(), stuNumber:$("#stuNumber").val()},
+							 dataType: "json",
+							 success: function(data){
+								if(data=="1"){
+									layer.msg('清空成功!', {
+									  icon: 1,
+									  time: 1000 //2秒关闭（如果不配置，默认是3秒）
+									}, function(){
+										 window.location.href = "/examAddStudent/list/"+[[${examId}]];
+									});
+								}else if(data=="0"){
+									layer.msg('清除失败!', {
+									  icon: 5,
+									  time: 1000 //2秒关闭（如果不配置，默认是3秒）
+									}, function(){
+										 window.location.href = "/examAddStudent/list/"+[[${examId}]];
+									});
+								}
+							 }
+						 });
+					}, function(){
+
+					}
+				);
+
+
 			  });
 			});
 		</script>
@@ -39,11 +151,44 @@
 			<div th:replace="examAddStudent/nav :: content" th:remove="tag"></div>
 		</div>
 
+			<div class="table-responsive">
+
+				<table class="table table-hover">
+
+					<tr class="success">
+
+						<th>考试名称</th>
+
+						<th>监考老师</th>
+
+						<th>考试地点</th>
+
+						<th>开始时间</th>
+
+						<th>结束时间</th>
+
+					</tr>
+
+					<tr>
+						<td th:text="${examInfo.examName}"></td>
+
+						<td th:text="${examInfo.examTeacher}"></td>
+
+						<td th:text="${examInfo.examRoomName}"></td>
+
+						<td th:text="${examInfo.startDate}"></td>
+
+						<td th:text="${examInfo.endDate}"></td>
+					</tr>
+
+				</table>
+
+
 		<div class="table-responsive">
 
 			<table class="table table-hover">
 				<thead>
-					<tr>
+					<tr class="info">
 
 						<th>姓名</th>
 
@@ -54,6 +199,8 @@
 						<th>身份证号</th>
 
 						<th>所在学院</th>
+
+						<th>班级</th>
 
 						<th>操作</th>
 
@@ -76,6 +223,8 @@
 						<span th:case="4">工程学院</span>
 						<span th:case="5">农学与生物技术学院</span>
 					</td>
+
+					<td th:text="${obj.classesName}"></td>
 
 					<td>
 						<div class="action-buttons">
@@ -139,7 +288,7 @@
 								&times;
 							</button>
 							<h4 class="modal-title" id="addLisiModalLabel">
-								批量添加考生
+								批量添加考生(每行一个学号)
 							</h4>
 						</div>
 						<div class="modal-body">
@@ -147,25 +296,19 @@
 								<div class="form-group form-group-lg">
 									<div class="input-group">
 										<div class="input-group-addon">学号：</div>
-										<input name="stuNumber" type="text" class="form-control"  placeholder="请输入学号" />
-										<input name="examId" type="hidden" class="form-control" th:value="${examId}"/>
+										<textarea id="txtAreaNumber" class="form-control" rows="8" name=textarea placeholder="每行一个学号，回车进行换行"></textarea>
+										<input id="examId2" name="examId" type="hidden" class="form-control" th:value="${examId}"/>
 									</div>
 								</div>
 
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 									</button>
-									<button type="submit" class="btn btn-primary">
-										提交
-									</button>
+									<button id="addListBtn"  type="button" class="btn btn-primary">提交</button>
 								</div>
 							</form>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">关闭
-							</button>
-							<button type="submit" class="btn btn-primary">提交</button>
-						</div>
+
 					</div><!-- /.modal-content -->
 				</div><!-- /.modal -->
 			</div>

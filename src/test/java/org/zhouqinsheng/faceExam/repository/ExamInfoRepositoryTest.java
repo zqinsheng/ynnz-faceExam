@@ -14,6 +14,12 @@ public class ExamInfoRepositoryTest {
 	private IExamInfoRepository examInfoRepository;
 
 	@Test
-	public void test(){ 
+	public void test(){
+		int num =1;
+		for (int i = 0; i < 100; i++) {
+
+			num=num+num++;
+		}
+		System.out.println(num);
 	}
 }

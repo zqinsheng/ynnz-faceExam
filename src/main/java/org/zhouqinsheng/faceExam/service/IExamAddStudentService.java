@@ -1,6 +1,8 @@
 package org.zhouqinsheng.faceExam.service;
 
 import org.konghao.service.IBaseService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.zhouqinsheng.faceExam.model.ExamAddStudent;
 import org.zhouqinsheng.faceExam.model.ExamPerson;
 
@@ -12,4 +14,7 @@ import org.zhouqinsheng.faceExam.model.ExamPerson;
  */
 public interface IExamAddStudentService extends IBaseService<ExamAddStudent,Integer> {
 
+     Page<ExamAddStudent> findAllByExamId(Pageable page,int examId);
+
+     int deleteAll(int examId);
 }

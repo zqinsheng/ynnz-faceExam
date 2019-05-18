@@ -16,7 +16,7 @@ public class SimplePageBuilder {
 	/**
 	 * 以常量的形式存储，在实际的运用中应该从properties文件中取得，思路都一样
 	 * */
-	public static final int size = 15;
+	public static final int size = 10;
 	
 	public static Pageable generate(Integer page,int size,Sort sort) {
 		page = (page==null||page<0)?0:page;

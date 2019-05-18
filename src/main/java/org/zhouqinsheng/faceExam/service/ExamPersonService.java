@@ -67,8 +67,23 @@ public class ExamPersonService implements IExamPersonService {
 		 return examPersonRepository.findAll(page);
 	}
 
+	/**
+	 * 通过单个学号查询一个学生的信息
+	 * @param stuNumber
+	 * @return
+	 */
 	@Override
 	public ExamPerson findByStuNumber(String stuNumber) {
 		return examPersonRepository.findByNumber(stuNumber);
+	}
+
+	/**
+	 * 通过一组学号查询学生
+	 * @param stuNumbers
+	 * @return
+	 */
+	@Override
+	public List<ExamPerson> findAllByStuNumber(List<String> stuNumbers) {
+		return examPersonRepository.findByStuNumberIn(stuNumbers);
 	}
 }
