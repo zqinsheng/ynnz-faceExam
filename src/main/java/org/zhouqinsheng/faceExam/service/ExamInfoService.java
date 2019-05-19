@@ -1,13 +1,14 @@
 package org.zhouqinsheng.faceExam.service;
 
-import org.zhouqinsheng.faceExam.repository.*;
-import org.zhouqinsheng.faceExam.model.*;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zhouqinsheng.faceExam.model.ExamInfo;
+import org.zhouqinsheng.faceExam.repository.IExamInfoRepository;
+
+import java.util.List;
 
 @Service
 public class ExamInfoService implements IExamInfoService {
@@ -65,5 +66,15 @@ public class ExamInfoService implements IExamInfoService {
 	@Override
 	public Page<ExamInfo> find(Pageable page) {
 		 return examInfoRepository.findAll(page);
+	}
+
+	/**
+	 * 通过教师id查询相关考试
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public List countExamByTeacherId(int id) {
+		return examInfoRepository.countExamByTeacherId(id);
 	}
 }

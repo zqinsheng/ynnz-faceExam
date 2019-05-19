@@ -6,4 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface ITeacherInfoRepository extends BaseRepository<TeacherInfo,Integer>,JpaSpecificationExecutor<TeacherInfo> {
 
+    TeacherInfo findByJobNumber(String jobNumber);
+
+    TeacherInfo findByOpenId(String openId);
 }

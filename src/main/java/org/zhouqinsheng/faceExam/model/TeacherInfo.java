@@ -46,6 +46,20 @@ public class TeacherInfo {
     //学院
     private String college;
 
+    /**
+     * 微信openId
+     */
+    @Column(name = "open_id")
+    private String openId;
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
     public String getAge() {
         return age;
     }

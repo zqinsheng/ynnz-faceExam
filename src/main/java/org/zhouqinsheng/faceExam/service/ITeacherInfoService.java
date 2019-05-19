@@ -10,5 +10,7 @@ import org.zhouqinsheng.faceExam.model.TeacherInfo;
  * 
  */
 public interface ITeacherInfoService extends IBaseService<TeacherInfo,Integer> {
+    TeacherInfo findByJobNumber(String jobNumer);
 
+    TeacherInfo findByOpenId(String openId);
 }

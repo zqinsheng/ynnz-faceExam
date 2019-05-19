@@ -1,13 +1,14 @@
 package org.zhouqinsheng.faceExam.service;
 
-import org.zhouqinsheng.faceExam.repository.*;
-import org.zhouqinsheng.faceExam.model.*;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zhouqinsheng.faceExam.model.TeacherInfo;
+import org.zhouqinsheng.faceExam.repository.ITeacherInfoRepository;
+
+import java.util.List;
 
 @Service
 public class TeacherInfoService implements ITeacherInfoService {
@@ -66,4 +67,26 @@ public class TeacherInfoService implements ITeacherInfoService {
 	public Page<TeacherInfo> find(Pageable page) {
 		 return teacherInfoRepository.findAll(page);
 	}
+
+	/**
+	 * 通过工号查找教师
+	 * @param jobNumer
+	 * @return
+	 */
+	@Override
+	public TeacherInfo findByJobNumber(String jobNumer) {
+		return teacherInfoRepository.findByJobNumber(jobNumer);
+	}
+
+	/**
+	 * 通过openid查找用户
+	 * @param openId
+	 * @return
+	 */
+	@Override
+	public TeacherInfo findByOpenId(String openId) {
+		return teacherInfoRepository.findByOpenId(openId);
+	}
+
+
 }
