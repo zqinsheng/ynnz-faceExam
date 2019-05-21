@@ -77,4 +77,44 @@ public class ExamInfoService implements IExamInfoService {
 	public List countExamByTeacherId(int id) {
 		return examInfoRepository.countExamByTeacherId(id);
 	}
+
+	/**
+	 * 通过教师id，查询待监考场次
+	 * @param teacherId
+	 * @return
+	 */
+	@Override
+	public List findReadysExamByTeacherId(int teacherId) {
+		return examInfoRepository.findReadysExamByTeacherId(teacherId);
+	}
+
+	/**
+	 * 查询已结束场次
+	 * @param teacherId
+	 * @return
+	 */
+	@Override
+	public List<ExamInfo> findAlreadysExamByTeacherId(int teacherId) {
+		return examInfoRepository.findAlreadysExamByTeacherId(teacherId);
+	}
+
+	/**
+	 * 统计待监考场次
+	 * @param teacherId
+	 * @return
+	 */
+	@Override
+	public int countReadysExamByTeacherId(int teacherId) {
+		return examInfoRepository.countReadysExamByTeacherId(teacherId);
+	}
+
+	/**
+	 * 统计已监考场次
+	 * @param teacherId
+	 * @return
+	 */
+	@Override
+	public int countAlreadysExamByTeacherId(int teacherId) {
+		return examInfoRepository.countAlreadysExamByTeacherId(teacherId);
+	}
 }

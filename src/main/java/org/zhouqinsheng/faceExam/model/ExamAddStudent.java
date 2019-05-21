@@ -64,6 +64,36 @@ public class ExamAddStudent {
 	@Column(name = "image_url")
 	private  String imageUrl;
 
+	/**
+	 *考试状态，1-成功考试，0-没有成功
+	 * @return
+	 */
+	@Column(name = "exam_status")
+	private int examStatus;
+
+	/**
+	 * 刷脸时间
+	 */
+	@Column(name="exam_time")
+	private String examTime;
+
+
+	public String getExamTime() {
+		return examTime;
+	}
+
+	public void setExamTime(String examTime) {
+		this.examTime = examTime;
+	}
+
+	public int getExamStatus() {
+		return examStatus;
+	}
+
+	public void setExamStatus(int examStatus) {
+		this.examStatus = examStatus;
+	}
+
 	public String getClassesName() {
 		return classesName;
 	}

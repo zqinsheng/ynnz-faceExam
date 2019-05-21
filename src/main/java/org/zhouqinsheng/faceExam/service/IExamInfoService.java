@@ -14,4 +14,12 @@ import java.util.List;
 public interface IExamInfoService extends IBaseService<ExamInfo,Integer> {
 
     List countExamByTeacherId(int id);
+
+    List<ExamInfo> findReadysExamByTeacherId(int teacherId);
+
+    List<ExamInfo> findAlreadysExamByTeacherId(int teacherId);
+
+    int countReadysExamByTeacherId(int teacherId);
+
+    int countAlreadysExamByTeacherId(int teacherId);
 }

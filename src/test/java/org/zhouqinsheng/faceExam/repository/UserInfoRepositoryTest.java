@@ -14,6 +14,7 @@ public class UserInfoRepositoryTest {
 	private IUserInfoRepository userInfoRepository;
 
 	@Test
-	public void test(){ 
+	public void test(){
+
 	}
 }

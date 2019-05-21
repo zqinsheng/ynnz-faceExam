@@ -4,7 +4,8 @@ import org.konghao.service.IBaseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.zhouqinsheng.faceExam.model.ExamAddStudent;
-import org.zhouqinsheng.faceExam.model.ExamPerson;
+
+import java.util.List;
 
 /**
  * 考试考生Service的实现
@@ -17,4 +18,18 @@ public interface IExamAddStudentService extends IBaseService<ExamAddStudent,Inte
      Page<ExamAddStudent> findAllByExamId(Pageable page,int examId);
 
      int deleteAll(int examId);
+
+     int countByExamId(int examId);
+
+     List<ExamAddStudent> findSucceByExamId(int examId);
+
+     List<ExamAddStudent> findFailByExamId(int examId);
+
+     int countSucceByExamId(int examId);
+
+     int countFailByExamId(int examId);
+
+     List<ExamAddStudent> findSucceStuByName(int examId,String name);
+
+     List<ExamAddStudent> findFailStuByName(int examId,String name);
 }

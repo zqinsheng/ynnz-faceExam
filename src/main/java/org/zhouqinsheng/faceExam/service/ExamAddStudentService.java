@@ -6,9 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zhouqinsheng.faceExam.model.ExamAddStudent;
-import org.zhouqinsheng.faceExam.model.ExamPerson;
 import org.zhouqinsheng.faceExam.repository.IExamAddStudentRepository;
-import org.zhouqinsheng.faceExam.repository.IExamPersonRepository;
 
 import java.util.List;
 
@@ -88,5 +86,77 @@ public class ExamAddStudentService implements IExamAddStudentService {
 	@Override
 	public int deleteAll(int examId) {
 		  return examAddStudentRepository.deleteByExamInfoId(examId);
+	}
+
+	/**
+	 * 统计考试相关的学生人数
+	 * @param examId
+	 * @return
+	 */
+	@Override
+	public int countByExamId(int examId) {
+		return examAddStudentRepository.countByExamInfoId(examId);
+	}
+
+	/**
+	 * 刷脸成功的学生
+	 * @param examId
+	 * @return
+	 */
+	@Override
+	public List<ExamAddStudent> findSucceByExamId(int examId) {
+		return examAddStudentRepository.findSucceByExamId(examId);
+	}
+
+	/**
+	 * 刷脸失败的学生
+	 * @param examId
+	 * @return
+	 */
+	@Override
+	public List<ExamAddStudent> findFailByExamId(int examId) {
+		return examAddStudentRepository.findFailByExamId(examId);
+	}
+
+	/**
+	 * 统计成功学生人数
+	 * @param examId
+	 * @return
+	 */
+	@Override
+	public int countSucceByExamId(int examId) {
+		return examAddStudentRepository.countSucceByExamId(examId);
+	}
+
+	/**
+	 * 统计失败学生人数
+	 * @param examId
+	 * @return
+	 */
+	@Override
+	public int countFailByExamId(int examId) {
+		return examAddStudentRepository.countFailByExamId(examId);
+	}
+
+	/**
+	 * 通过姓名模糊查询成功学生
+	 * @param examId
+	 * @param name
+	 * @return
+	 */
+	@Override
+	public List<ExamAddStudent> findSucceStuByName(int examId, String name) {
+		return examAddStudentRepository.findSucceStuByName(name,examId);
+	}
+
+	/**
+	 * 通过姓名查询失败学生
+	 * @param examId
+	 * @param name
+	 * @return
+	 */
+	@Override
+	public List<ExamAddStudent> findFailStuByName(int examId, String name) {
+		return examAddStudentRepository.findFailStuByName(name,examId);
 	}
 }

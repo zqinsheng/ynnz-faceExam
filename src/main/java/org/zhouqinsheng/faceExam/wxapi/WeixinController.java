@@ -75,7 +75,7 @@ public class WeixinController {
     }
 
 
-    @SuppressWarnings("unchecked")
+
     private Map<String, Object> getSessionByCode(String code) {
         String url = this.requestUrl + "?appid=" + appId + "&secret=" + appSecret + "&js_code=" + code + "&grant_type="
                 + grantType;
