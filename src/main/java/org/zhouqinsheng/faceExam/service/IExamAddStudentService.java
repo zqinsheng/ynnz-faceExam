@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.zhouqinsheng.faceExam.model.ExamAddStudent;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,4 +33,6 @@ public interface IExamAddStudentService extends IBaseService<ExamAddStudent,Inte
      List<ExamAddStudent> findSucceStuByName(int examId,String name);
 
      List<ExamAddStudent> findFailStuByName(int examId,String name);
+
+     int countMonthFace(Date startDate, Date endDate);
 }

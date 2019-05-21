@@ -843,9 +843,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/wxapi/YnavcController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="309" column="79" lean-forward="true" selection-start-line="309" selection-start-column="79" selection-end-line="309" selection-end-column="79" />
+            <state relative-caret-position="118">
+              <caret line="119" column="61" selection-start-line="119" selection-start-column="61" selection-end-line="119" selection-end-column="61" />
               <folding>
+                <element signature="e#3376#3392#0" expanded="true" />
                 <element signature="e#8220#8235#0" expanded="true" />
                 <element signature="e#9001#9016#0" expanded="true" />
                 <element signature="e#9361#9376#0" expanded="true" />
@@ -866,8 +867,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/IExamAddStudentService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="33" column="26" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+            <state relative-caret-position="96">
+              <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -889,8 +890,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/IExamInfoService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+            <state relative-caret-position="278">
+              <caret line="26" column="68" selection-start-line="26" selection-start-column="68" selection-end-line="26" selection-end-column="68" />
             </state>
           </provider>
         </entry>
@@ -898,8 +899,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/ExamAddStudentService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="159" column="50" lean-forward="true" selection-start-line="159" selection-start-column="50" selection-end-line="159" selection-end-column="50" />
+            <state relative-caret-position="115">
+              <caret line="138" column="45" selection-start-line="138" selection-start-column="45" selection-end-line="138" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2425#2426#0" expanded="true" />
@@ -914,8 +915,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/ExamInfoService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="97" column="44" selection-start-line="97" selection-start-column="44" selection-end-line="97" selection-end-column="44" />
+            <state relative-caret-position="283">
+              <caret line="129" column="38" selection-start-line="129" selection-start-column="38" selection-end-line="129" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/controller/ExamInfoController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-672">
+              <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -923,8 +933,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/repository/IExamInfoRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="24" selection-end-column="77" />
+            <state relative-caret-position="304">
+              <caret line="45" column="12" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -932,38 +942,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/repository/IExamAddStudentRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/model/ExamInfoAlreadyDto.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-              <folding>
-                <element signature="e#344#345#0" expanded="true" />
-                <element signature="e#392#393#0" expanded="true" />
-                <element signature="e#432#433#0" expanded="true" />
-                <element signature="e#232#233#0" expanded="true" />
-                <element signature="e#263#264#0" expanded="true" />
-                <element signature="e#313#314#0" expanded="true" />
-                <element signature="e#353#354#0" expanded="true" />
-                <element signature="e#389#390#0" expanded="true" />
-                <element signature="e#424#425#0" expanded="true" />
-                <element signature="e#477#478#0" expanded="true" />
-                <element signature="e#525#526#0" expanded="true" />
-                <element signature="e#561#562#0" expanded="true" />
-                <element signature="e#596#597#0" expanded="true" />
-                <element signature="e#649#650#0" expanded="true" />
-                <element signature="e#697#698#0" expanded="true" />
-                <element signature="e#730#731#0" expanded="true" />
-                <element signature="e#762#763#0" expanded="true" />
-                <element signature="e#809#810#0" expanded="true" />
-                <element signature="e#851#852#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="158">
+              <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -1063,16 +1043,16 @@
         <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/TeacherInfoService.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/repository/ITeacherInfoRepository.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/wxapi/WeixinController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/IExamInfoService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/repository/IExamInfoRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/ExamInfoService.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/zhouqinsheng/faceExam/repository/UserInfoRepositoryTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/model/ExamAddStudent.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/model/ExamInfoAlreadyDto.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/model/ExamInfoDto.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/IExamInfoService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/ExamInfoService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/repository/IExamInfoRepository.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/ExamAddStudentService.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/IExamAddStudentService.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/repository/IExamAddStudentRepository.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/ExamAddStudentService.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/wxapi/YnavcController.java" />
       </list>
     </option>
@@ -1579,8 +1559,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32890365" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.9013657" visible="true" weight="0.1627907" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49924126" weight="0.1578073" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.9013657" visible="true" weight="0.4202658" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49924126" weight="0.43687707" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -1931,31 +1911,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/controller/ExamInfoController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/model/ExamInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/IExamInfoService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/ExamInfoService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="97" column="44" selection-start-line="97" selection-start-column="44" selection-end-line="97" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -1999,13 +1958,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/repository/IExamInfoRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="24" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.7.RELEASE/spring-web-4.3.7.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26">
@@ -2013,11 +1965,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/IExamInfoService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="26" column="68" selection-start-line="26" selection-start-column="68" selection-end-line="26" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/repository/IExamInfoRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="45" column="12" selection-start-line="45" selection-start-column="12" selection-end-line="45" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/controller/ExamInfoController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-672">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/ExamInfoService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="129" column="38" selection-start-line="129" selection-start-column="38" selection-end-line="129" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/wxapi/YnavcController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="309" column="79" lean-forward="true" selection-start-line="309" selection-start-column="79" selection-end-line="309" selection-end-column="79" />
+        <state relative-caret-position="118">
+          <caret line="119" column="61" selection-start-line="119" selection-start-column="61" selection-end-line="119" selection-end-column="61" />
           <folding>
+            <element signature="e#3376#3392#0" expanded="true" />
             <element signature="e#8220#8235#0" expanded="true" />
             <element signature="e#9001#9016#0" expanded="true" />
             <element signature="e#9361#9376#0" expanded="true" />
@@ -2027,15 +2008,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/IExamAddStudentService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="33" column="26" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+        <state relative-caret-position="96">
+          <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/service/ExamAddStudentService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="159" column="50" lean-forward="true" selection-start-line="159" selection-start-column="50" selection-end-line="159" selection-end-column="50" />
+        <state relative-caret-position="115">
+          <caret line="138" column="45" selection-start-line="138" selection-start-column="45" selection-end-line="138" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2425#2426#0" expanded="true" />
@@ -2048,8 +2029,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/zhouqinsheng/faceExam/repository/IExamAddStudentRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+        <state relative-caret-position="158">
+          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
         </state>
       </provider>
     </entry>

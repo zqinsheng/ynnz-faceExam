@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.zhouqinsheng.faceExam.model.ExamInfo;
 import org.zhouqinsheng.faceExam.repository.IExamInfoRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -116,5 +117,16 @@ public class ExamInfoService implements IExamInfoService {
 	@Override
 	public int countAlreadysExamByTeacherId(int teacherId) {
 		return examInfoRepository.countAlreadysExamByTeacherId(teacherId);
+	}
+
+	/**
+	 * 查询日期在本月的考试
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	@Override
+	public List<ExamInfo> findMonthExam(int teacherId, Date startDate, Date endDate) {
+		return examInfoRepository.findMonthExam(teacherId,startDate,endDate);
 	}
 }

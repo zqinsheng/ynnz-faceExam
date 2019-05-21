@@ -3,6 +3,7 @@ package org.zhouqinsheng.faceExam.service;
 import org.konghao.service.IBaseService;
 import org.zhouqinsheng.faceExam.model.ExamInfo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,4 +23,6 @@ public interface IExamInfoService extends IBaseService<ExamInfo,Integer> {
     int countReadysExamByTeacherId(int teacherId);
 
     int countAlreadysExamByTeacherId(int teacherId);
+
+    List<ExamInfo> findMonthExam(int teacherId, Date startDate, Date endDate);
 }

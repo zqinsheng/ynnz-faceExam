@@ -15,10 +15,9 @@ import org.zhouqinsheng.faceExam.service.IUserInfoService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 @RestController
@@ -79,19 +78,61 @@ public class YnavcController {
 	}
 
 	/**
-	 * 统计教师的待监考和未监考
+	 * 统计教师的待监考和未监考,本月核验人数，成功，失败
+	 *
 	 * @param openId
 	 * @return
 	 */
-    @RequestMapping(value="/examCount/{openId}",method=RequestMethod.GET)
-    public ResultModel examCount(@PathVariable("openId") String openId) {
-        TeacherInfo teacher = teacherInfoService.findByOpenId(openId);
-        List list = examInfoService.countExamByTeacherId(teacher.getId());
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("content",list);
-        map.put("teacher",teacher);
-        return ResultTools.result(0, "", map);
-    }
+	@RequestMapping(value = "/examCount/{openId}", method = RequestMethod.GET)
+	public ResultModel examCount(@PathVariable("openId") String openId) {
+		try {
+			//教师信息
+			TeacherInfo teacher = teacherInfoService.findByOpenId(openId);
+			//待监考和未监考
+			List list = examInfoService.countExamByTeacherId(teacher.getId());
+
+			/**查询本月已经监考的场次*/
+			Calendar cale = null;
+			// 获取当月第一天和最后一天
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			String firstday, lastday;
+			// 获取月的第一天
+			cale = Calendar.getInstance();
+			cale.add(Calendar.MONTH, 0);
+			cale.set(Calendar.DAY_OF_MONTH, 1);
+			firstday = format.format(cale.getTime());
+			// 获取月的最后一天
+			cale = Calendar.getInstance();
+			cale.add(Calendar.MONTH, 1);
+			cale.set(Calendar.DAY_OF_MONTH, 0);
+			lastday = format.format(cale.getTime());
+
+			Date startDate = format.parse(firstday);
+			Date endDate = format.parse(lastday);
+			/**统计本月考试*/
+			List<ExamInfo> monthExam = examInfoService.findMonthExam(teacher.getId(), startDate, endDate);
+			int seccessCount = 0;
+			int failCount = 0;
+
+			//统计每场考试成功和失败的人数
+			for (ExamInfo e:monthExam){
+				seccessCount += examAddStudentService.countSucceByExamId(e.getId());
+				failCount += examAddStudentService.countFailByExamId(e.getId());
+			}
+			int total = seccessCount+failCount;
+
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("content", list);
+			map.put("teacher", teacher);
+			map.put("total",total);
+			map.put("seccessCount",seccessCount);
+			map.put("failCount",failCount);
+
+			return ResultTools.result(0, "", map);
+		} catch (ParseException e) {
+			return ResultTools.result(404,e.getMessage(), null);
+		}
+	}
 
 
 	/**

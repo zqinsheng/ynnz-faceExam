@@ -5,6 +5,7 @@ import org.zhouqinsheng.faceExam.model.ExamInfo;
 import org.konghao.reposiotry.base.BaseRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IExamInfoRepository extends BaseRepository<ExamInfo,Integer>,JpaSpecificationExecutor<ExamInfo> {
@@ -36,4 +37,12 @@ public interface IExamInfoRepository extends BaseRepository<ExamInfo,Integer>,Jp
             "or two_teacher_id=?1 or three_teacher_id=?1) AND exam_status = 0",
             nativeQuery = true)
     int countAlreadysExamByTeacherId(int teacherId);
+
+
+    @Query(value = "select * from t_exam_info where (one_teacher_id=?1 or two_teacher_id=?1 " +
+            "or three_teacher_id=?1) AND exam_status = 0 " +
+            "and DATE_FORMAT( end_date, '%Y-%m-%d') >?2 " +
+            "and DATE_FORMAT( end_date, '%Y-%m-%d')<?3",
+            nativeQuery = true)
+    List<ExamInfo> findMonthExam(int teacherId, Date startDate, Date endDate);
 }

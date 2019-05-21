@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 import org.zhouqinsheng.faceExam.model.ExamAddStudent;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IExamAddStudentRepository extends BaseRepository<ExamAddStudent,Integer>,JpaSpecificationExecutor<ExamAddStudent> {
@@ -49,4 +50,9 @@ public interface IExamAddStudentRepository extends BaseRepository<ExamAddStudent
     @Query(value = "SELECT * from t_exam_add_student where person_name LIKE %?1% and exam_info_id=?2 and exam_status=0",
             nativeQuery = true)
     List<ExamAddStudent> findFailStuByName(String name,int examInfoId);
+
+    @Query(value = "select COUNT(*) from t_exam_add_student where " +
+            "DATE_FORMAT( exam_time, '%Y-%m-%d')>?1 " +
+            "and  DATE_FORMAT( exam_time, '%Y-%m-%d')<=?2",nativeQuery = true)
+    int countMonthFace(Date startDate, Date endDate);
 }

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.zhouqinsheng.faceExam.model.ExamAddStudent;
 import org.zhouqinsheng.faceExam.repository.IExamAddStudentRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -159,4 +160,17 @@ public class ExamAddStudentService implements IExamAddStudentService {
 	public List<ExamAddStudent> findFailStuByName(int examId, String name) {
 		return examAddStudentRepository.findFailStuByName(name,examId);
 	}
+
+	/**
+	 * 统计本月核检人数
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	@Override
+	public int countMonthFace(Date startDate, Date endDate) {
+		return examAddStudentRepository.countMonthFace(startDate,endDate);
+	}
+
+
 }
