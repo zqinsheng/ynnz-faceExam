@@ -129,4 +129,34 @@ public class ExamInfoService implements IExamInfoService {
 	public List<ExamInfo> findMonthExam(int teacherId, Date startDate, Date endDate) {
 		return examInfoRepository.findMonthExam(teacherId,startDate,endDate);
 	}
+
+	/**
+	 * 查询待监考场次
+	 * @param teacherId
+	 * @return
+	 */
+	@Override
+	public List<ExamInfo> findReadyExam(int teacherId) {
+		return examInfoRepository.findReadyExam(teacherId);
+	}
+
+	/**
+	 * 查询已监考场次
+	 * @param teacherId
+	 * @return
+	 */
+	@Override
+	public List<ExamInfo> findAlreadyExam(int teacherId) {
+		return examInfoRepository.findAlreadyExam(teacherId);
+	}
+
+	/**
+	 * 查询和教师相关的考试场次
+	 * @param teacherId
+	 * @return
+	 */
+	@Override
+	public List<ExamInfo> findAllExamByTeacherId(int teacherId) {
+		return examInfoRepository.findAllExamByTeacherId(teacherId);
+	}
 }

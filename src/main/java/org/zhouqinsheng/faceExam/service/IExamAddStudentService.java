@@ -35,4 +35,8 @@ public interface IExamAddStudentService extends IBaseService<ExamAddStudent,Inte
      List<ExamAddStudent> findFailStuByName(int examId,String name);
 
      int countMonthFace(Date startDate, Date endDate);
+
+     ExamAddStudent findByExamInfoIdAndStuNumber(int examId,String stuNumber);
+
+     ExamAddStudent findByStuNumber(String stuNumber);
 }

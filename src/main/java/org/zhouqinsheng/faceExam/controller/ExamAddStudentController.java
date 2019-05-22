@@ -1,6 +1,5 @@
 package org.zhouqinsheng.faceExam.controller;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.konghao.reposiotry.kit.SimplePageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,13 +12,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.zhouqinsheng.faceExam.model.ExamAddStudent;
 import org.zhouqinsheng.faceExam.model.ExamInfo;
 import org.zhouqinsheng.faceExam.model.ExamPerson;
-import org.zhouqinsheng.faceExam.repository.IExamAddStudentRepository;
 import org.zhouqinsheng.faceExam.service.IExamAddStudentService;
 import org.zhouqinsheng.faceExam.service.IExamInfoService;
 import org.zhouqinsheng.faceExam.service.IExamPersonService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +42,8 @@ public class ExamAddStudentController {
 
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(ExamAddStudent examAddStudent,Model model) {
+		examAddStudent.setExamStatus(0);
+		examAddStudent.setImageUrl("no_face.png");
 		examAddStudentService.add(examAddStudent);
 		return "redirect:/examAddStudent/list";
 	}
@@ -64,6 +62,8 @@ public class ExamAddStudentController {
 			student.setPersonName(person.getPersonName());
 			student.setStuNumber(person.getStuNumber());
 			student.setClassesName(person.getClassesName());
+			student.setExamStatus(0);
+			student.setImageUrl("no_face.png");
 			examAddStudentService.add(student);
 			return "1";
 		}
@@ -101,6 +101,8 @@ public class ExamAddStudentController {
 			student.setCollege(person.getCollege());
 			student.setExamInfoId(examId);
 			student.setClassesName(person.getClassesName());
+			student.setExamStatus(0);
+			student.setImageUrl("no_face.png");
 			examAddStudentService.add(student);
 		}
 

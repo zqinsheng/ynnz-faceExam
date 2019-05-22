@@ -25,4 +25,10 @@ public interface IExamInfoService extends IBaseService<ExamInfo,Integer> {
     int countAlreadysExamByTeacherId(int teacherId);
 
     List<ExamInfo> findMonthExam(int teacherId, Date startDate, Date endDate);
+
+    List<ExamInfo> findReadyExam(int teacherId);
+
+    List<ExamInfo> findAlreadyExam(int teacherId);
+
+    List<ExamInfo> findAllExamByTeacherId(int teacherId);
 }

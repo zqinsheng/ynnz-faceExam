@@ -162,7 +162,7 @@ CodeMirror.defineMode("tiddlywiki", function () {
         return ret('brace', 'brace');
       }
     }
-    if (ch == "@") {    // check for space link. TODO fix @@...@@ highlighting
+    if (ch == "@") {    // check for space link. TODO fix @MavenProject: org.zhouqinsheng.faceExam:ynnz-faceExam:0.0.1-SNAPSHOT @ F:\\project\\ynnz-faceExam\\ynnz-faceExam\\pom.xml@ highlighting
       stream.eatWhile(isSpaceName);
       return ret("link", "link");
     }

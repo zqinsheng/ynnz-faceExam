@@ -172,5 +172,26 @@ public class ExamAddStudentService implements IExamAddStudentService {
 		return examAddStudentRepository.countMonthFace(startDate,endDate);
 	}
 
+	/**
+	 * 通过考试id和学号查找学生
+	 * @param examId
+	 * @param stuNumber
+	 * @return
+	 */
+	@Override
+	public ExamAddStudent findByExamInfoIdAndStuNumber(int examId, String stuNumber) {
+		return examAddStudentRepository.findByExamInfoIdAndStuNumber(examId,stuNumber);
+	}
+
+	/**
+	 * 通过学号查找学生
+	 * @param stuNumber
+	 * @return
+	 */
+	@Override
+	public ExamAddStudent findByStuNumber(String stuNumber) {
+		return examAddStudentRepository.findByStuNumber(stuNumber);
+	}
+
 
 }

@@ -18,12 +18,14 @@ public interface IExamInfoRepository extends BaseRepository<ExamInfo,Integer>,Jp
 
 
     @Query(value = "select * from t_exam_info where (one_teacher_id=?1 " +
-            "or two_teacher_id=?1 or three_teacher_id=?1) AND exam_status = 1",
+            "or two_teacher_id=?1 or three_teacher_id=?1) AND exam_status = 1 " +
+            "ORDER BY DATE_FORMAT(start_date,'%Y-%m-%d') DESC",
     nativeQuery = true)
     List<ExamInfo> findReadysExamByTeacherId(int teacherId);
 
     @Query(value = "select * from t_exam_info where (one_teacher_id=?1 " +
-            "or two_teacher_id=?1 or three_teacher_id=?1) AND exam_status = 0",
+            "or two_teacher_id=?1 or three_teacher_id=?1) AND exam_status = 0 " +
+            "ORDER BY DATE_FORMAT(start_date,'%Y-%m-%d') DESC",
             nativeQuery = true)
     List<ExamInfo> findAlreadysExamByTeacherId(int teacherId);
 
@@ -45,4 +47,21 @@ public interface IExamInfoRepository extends BaseRepository<ExamInfo,Integer>,Jp
             "and DATE_FORMAT( end_date, '%Y-%m-%d')<?3",
             nativeQuery = true)
     List<ExamInfo> findMonthExam(int teacherId, Date startDate, Date endDate);
+
+    @Query(value = "SELECT * FROM t_exam_info WHERE" +
+            "(one_teacher_id=?1 or two_teacher_id=?1 or three_teacher_id=?1) " +
+            "AND DATE_FORMAT(end_date,'%Y-%m-%d') > NOW()",
+            nativeQuery = true)
+    List<ExamInfo> findReadyExam(int teacherId);
+
+    @Query(value = "SELECT * FROM t_exam_info WHERE" +
+            "(one_teacher_id=?1 or two_teacher_id=?1 or three_teacher_id=?1) " +
+            "AND DATE_FORMAT(end_date,'%Y-%m-%d') < NOW()",
+            nativeQuery = true)
+    List<ExamInfo> findAlreadyExam(int teacherId);
+
+    @Query(value = "select * from t_exam_info where (one_teacher_id=?1 " +
+            "or two_teacher_id=?1 or three_teacher_id=?1)",
+            nativeQuery = true)
+    List<ExamInfo> findAllExamByTeacherId(int teacherId);
 }

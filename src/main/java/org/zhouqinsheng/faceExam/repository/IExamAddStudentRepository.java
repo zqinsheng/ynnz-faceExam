@@ -55,4 +55,8 @@ public interface IExamAddStudentRepository extends BaseRepository<ExamAddStudent
             "DATE_FORMAT( exam_time, '%Y-%m-%d')>?1 " +
             "and  DATE_FORMAT( exam_time, '%Y-%m-%d')<=?2",nativeQuery = true)
     int countMonthFace(Date startDate, Date endDate);
+
+    ExamAddStudent findByExamInfoIdAndStuNumber(int examId,String stuNumber);
+
+    ExamAddStudent findByStuNumber(String stuNumber);
 }

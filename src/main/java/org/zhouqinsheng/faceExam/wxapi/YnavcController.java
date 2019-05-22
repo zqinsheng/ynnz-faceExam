@@ -1,11 +1,14 @@
 package org.zhouqinsheng.faceExam.wxapi;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.konghao.reposiotry.kit.SimplePageBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.zhouqinsheng.faceExam.apiTools.Base64Util;
+import org.zhouqinsheng.faceExam.apiTools.FileUtil;
+import org.zhouqinsheng.faceExam.apiTools.HttpUtil;
 import org.zhouqinsheng.faceExam.apiTools.ResultTools;
 import org.zhouqinsheng.faceExam.model.*;
 import org.zhouqinsheng.faceExam.service.IExamAddStudentService;
@@ -13,16 +16,22 @@ import org.zhouqinsheng.faceExam.service.IExamInfoService;
 import org.zhouqinsheng.faceExam.service.ITeacherInfoService;
 import org.zhouqinsheng.faceExam.service.IUserInfoService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.InvocationTargetException;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
 
 
 @RestController
 @RequestMapping("api/ynavc")
 public class YnavcController {
+
+	@Value("${uploadpic.path}")
+	private String uploadPicPath;
 
 	@Autowired
 	private IUserInfoService userInfoService;
@@ -86,15 +95,35 @@ public class YnavcController {
 	@RequestMapping(value = "/examCount/{openId}", method = RequestMethod.GET)
 	public ResultModel examCount(@PathVariable("openId") String openId) {
 		try {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			
 			//教师信息
 			TeacherInfo teacher = teacherInfoService.findByOpenId(openId);
+
+
+			/**根据当前时间  设置该教师关联的考试状态*/
+			List<ExamInfo> allExam = examInfoService.findAllExamByTeacherId(teacher.getId());
+			for(ExamInfo e :allExam){
+				String endDate = e.getEndDate();
+				Date eDate = format.parse(endDate);
+				if (eDate.after(new Date())){
+					//待监考
+					e.setExamStatus(1);
+				}else if(eDate.before(new Date())){
+					//已监考
+					e.setExamStatus(0);
+				}
+				examInfoService.add(e);
+			}
+
 			//待监考和未监考
-			List list = examInfoService.countExamByTeacherId(teacher.getId());
+			int readyExam = examInfoService.countReadysExamByTeacherId(teacher.getId());
+			int alreadyExam = examInfoService.countAlreadysExamByTeacherId(teacher.getId());
+
 
 			/**查询本月已经监考的场次*/
 			Calendar cale = null;
 			// 获取当月第一天和最后一天
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			String firstday, lastday;
 			// 获取月的第一天
 			cale = Calendar.getInstance();
@@ -109,6 +138,7 @@ public class YnavcController {
 
 			Date startDate = format.parse(firstday);
 			Date endDate = format.parse(lastday);
+
 			/**统计本月考试*/
 			List<ExamInfo> monthExam = examInfoService.findMonthExam(teacher.getId(), startDate, endDate);
 			int seccessCount = 0;
@@ -122,7 +152,8 @@ public class YnavcController {
 			int total = seccessCount+failCount;
 
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("content", list);
+			map.put("readyExam",readyExam);
+			map.put("alreadyExam",alreadyExam);
 			map.put("teacher", teacher);
 			map.put("total",total);
 			map.put("seccessCount",seccessCount);
@@ -159,14 +190,7 @@ public class YnavcController {
 
 	/**
 	 * 修改教师信息
-	 * @param id
-	 * @param teacherName
-	 * @param gender
-	 * @param age
-	 * @param phone
-	 * @param jobNumber
-	 * @param college
-	 * @return
+
 	 */
 	@RequestMapping(value="/updateTeacher/{id}/{teacherName}/{sex}/{age}/{phone}/{jobNumber}/{college}",method=RequestMethod.POST)
 	public String updateTeacher(@PathVariable("id") int id,@PathVariable("teacherName") String teacherName,
@@ -359,52 +383,140 @@ public class YnavcController {
 	}
 
 
+	/**人脸验证*/
+	@RequestMapping("/verifyFace")
+	public ResultModel verifyFace(@RequestParam("file") MultipartFile file) {
+		//System.out.println("name1:"+file.getName());
+		//System.out.println("originalName:"+file.getOriginalFilename());
+
+		//文件上传
+		if(file!=null) {
+			BufferedOutputStream bw = null;
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			String date = df.format(new Date());// n
+
+			try {
+				String fileName = file.getOriginalFilename();
+				//判断是否有文件
+				if(StringUtils.isNoneBlank(fileName)) {
+					//文件名称
+					String imgName = date+"-"+UUID.randomUUID().toString()+
+							fileName.substring(fileName.indexOf("."));
+					//文件格式
+					String imageType = fileName.substring(fileName.lastIndexOf(".")+1);
+					//文件存储路径
+					String outPath = uploadPicPath+imgName;
+					//创建输出文件对象
+					File outFile = new File(outPath);
+					//拷贝文件到输出文件对象
+					copyInputStreamToFile(file.getInputStream(), outFile);
+					//调用检测方法
+					String path = outFile.getPath();
+					//System.out.println(imgName);
+					//System.out.println(path);
+					//调用人脸验证接口
+					Map<String, Object> studentMap = this.sendFaceImg(path);
+					Map<String,Object> map = new HashMap<String,Object>();
+
+					if (studentMap!=null){
+						map.put("content",studentMap);
+						map.put("imgName",imgName);
+						map.put("imgType",imageType);
+						return ResultTools.result(0, "", map);
+					}else{
+						return ResultTools.result(0, "", map);
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if(bw!=null) {bw.close();}
+				} catch (IOException e) {
+					return ResultTools.result(404, e.getMessage(), null);
+				}
+			}
+		}
+		return ResultTools.result(1002, "", null);
 
 
-	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(UserInfo userInfo,Model model) {
-		userInfoService.add(userInfo);
-		return "redirect:/userInfo/list";
 	}
 
-	@RequestMapping("/{id}")
-	public String show(@PathVariable int id,Model model) {
-		UserInfo userInfo = userInfoService.load(id);
-		model.addAttribute("userInfo", userInfo);
-		return "userInfo/show";
-	}
-
-	@RequestMapping("/delete/{id}")
-	public @ResponseBody String delete(@PathVariable int id) {
-		userInfoService.delete(id);
-		return "1";
-	}
-
-	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
-	public String update(@PathVariable int id,Model model) {
-		UserInfo userInfo = userInfoService.load(id);
-		model.addAttribute("userInfo",userInfo);
-		return "userInfo/update";
-	}
-
-	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
-	public String update(@PathVariable int id,UserInfo userInfo) {
+	//调用人脸验证接口
+	private Map<String, Object> sendFaceImg(String path) {
 		try {
-			UserInfo tuserInfo = userInfoService.load(id);
-			BeanUtils.copyProperties(tuserInfo, userInfo);
-			userInfoService.update(tuserInfo);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
+			String url = "https://face.yunyitx.com/getface";
+			byte[] bytes = FileUtil.readFileByBytes(path);
+			String image = Base64Util.encode(bytes);
+
+			// 发送请求
+			Map<String,String> map = new HashMap<String,String>();
+			map.put("imgdata",image);
+			String data = HttpUtil.post(url,map);
+			System.out.println(data);
+			ObjectMapper mapper = new ObjectMapper();
+			Map<String, Object> json = null;
+
+			json = mapper.readValue(data, Map.class);
+			return json;
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/userInfo/list";
+		return null;
+
 	}
 
-	@RequestMapping("/list")
-	public String find(Model model,Integer page,HttpServletRequest request) {
-		Page<UserInfo> userInfos = userInfoService.find(SimplePageBuilder.generate(page));
-		model.addAttribute("datas",userInfos);
-		return "userInfo/list";
+
+	/**人脸验证成功，通过考试id和学号来判断是否有这个学生*/
+	@RequestMapping(value = "/verifyStudent/{examId}/{stuNumber}/{imageName}/{imageType}",method = RequestMethod.POST)
+	public ResultModel verifyStudent(@PathVariable("examId") int examId,
+									 @PathVariable("stuNumber") String stuNumber,
+									 @PathVariable("imageName") String imageName,
+									 @PathVariable("imageType") String imageType) {
+		ExamAddStudent student = examAddStudentService.findByExamInfoIdAndStuNumber(examId, stuNumber);
+		Map<String,Object> map = new HashMap<String,Object>();
+		if (student!=null){
+			//成功验证学生
+			//存储图片
+			student.setImageUrl(imageName);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date date = new Date();
+			String examTime = sdf.format(date);
+			//存储刷脸时间
+			student.setExamTime(examTime);
+			//刷脸状态成功
+			student.setExamStatus(1);
+			examAddStudentService.add(student);
+
+
+			map.put("content",student);
+			return ResultTools.result(0, "", map);
+		}else{
+			return ResultTools.result(0, "", null);
+		}
+	}
+
+	/**是否开启刷脸功能*/
+	@RequestMapping(value = "/verifyExamTime/{examId}",method = RequestMethod.POST)
+	public String verifyExamTime(@PathVariable("examId") int examId) {
+		try {
+			ExamInfo examInfo = examInfoService.load(examId);
+			String startDate = examInfo.getStartDate();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date date = format.parse(startDate);
+			long time = 30*60*1000;//30分钟
+			Date beforeDate = new Date(date .getTime() - time);//考试前30分钟
+			Date now = new Date();
+			//考试时间未到
+			if(now.before(beforeDate)){
+				return "0";
+				//考试前30分钟已到
+			}else if (now.after(beforeDate)){
+				return "1";
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "0";
 	}
 }
