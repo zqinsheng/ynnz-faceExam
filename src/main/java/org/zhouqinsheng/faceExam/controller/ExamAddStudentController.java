@@ -43,7 +43,8 @@ public class ExamAddStudentController {
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(ExamAddStudent examAddStudent,Model model) {
 		examAddStudent.setExamStatus(0);
-		examAddStudent.setImageUrl("no_face.png");
+		examAddStudent.setImageUrl("resource/no_face.png");
+		examAddStudent.setExamTime("未刷脸");
 		examAddStudentService.add(examAddStudent);
 		return "redirect:/examAddStudent/list";
 	}
@@ -63,7 +64,8 @@ public class ExamAddStudentController {
 			student.setStuNumber(person.getStuNumber());
 			student.setClassesName(person.getClassesName());
 			student.setExamStatus(0);
-			student.setImageUrl("no_face.png");
+			student.setImageUrl("resource/no_face.png");
+			student.setExamTime("未刷脸");
 			examAddStudentService.add(student);
 			return "1";
 		}
@@ -102,7 +104,8 @@ public class ExamAddStudentController {
 			student.setExamInfoId(examId);
 			student.setClassesName(person.getClassesName());
 			student.setExamStatus(0);
-			student.setImageUrl("no_face.png");
+			student.setImageUrl("resource/no_face.png");
+			student.setExamTime("未刷脸");
 			examAddStudentService.add(student);
 		}
 

@@ -26,9 +26,9 @@ public class WeixinController {
 
     private static Logger log = LoggerFactory.getLogger(WeixinController.class);
 
-    private String appId ="wx17eaf396f39ac9a2";
+    private String appId ="wxd777ef7694ed2fb1";
 
-    private String appSecret ="2d8801627f726f0c786405afa9ed9702";
+    private String appSecret ="356b631f0c2212a6d0798e9c780bdf13";
 
     private String grantType = "wx.grantType=authorization_code";
     // wx.grantType=authorization_code

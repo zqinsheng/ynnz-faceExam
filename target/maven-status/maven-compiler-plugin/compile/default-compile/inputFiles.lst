@@ -39,6 +39,7 @@ F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\konghao\reposiotry\base
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\repository\IExamInfoRepository.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\model\ExamInfo.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\com\zzsharing\aujaker\util\Commonkit.java
+F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\apiTools\ConstantUtils.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\wxapi\YnavcController.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\service\ITeacherInfoService.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\apiTools\Base64Util.java
@@ -47,13 +48,17 @@ F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\s
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\konghao\reposiotry\base\BaseRepositoryFactoryBean.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\apiTools\Utils.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\konghao\specification\SimpleSpecificationBuilder.java
+F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\controller\LoginController.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\controller\ExamPersonController.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\controller\ExamInfoController.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\konghao\controller\GlobalExceptionHandler.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\repository\IUserInfoRepository.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\controller\ExamRoomController.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\konghao\specification\SimpleSpecification.java
+F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\apiTools\ImgTools.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\konghao\reposiotry\kit\SimplePageBuilder.java
+F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\controller\LoginInterceptor.java
+F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\controller\WebConfigurer.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\zhouqinsheng\faceExam\controller\TeacherInfoController.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\konghao\controller\AppErrorController.java
 F:\project\ynnz-faceExam\ynnz-faceExam\src\main\java\org\konghao\specification\SpecificationOperator.java

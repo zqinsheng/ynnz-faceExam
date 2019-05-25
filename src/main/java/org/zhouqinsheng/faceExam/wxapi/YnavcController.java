@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.zhouqinsheng.faceExam.apiTools.Base64Util;
-import org.zhouqinsheng.faceExam.apiTools.FileUtil;
-import org.zhouqinsheng.faceExam.apiTools.HttpUtil;
-import org.zhouqinsheng.faceExam.apiTools.ResultTools;
+import org.zhouqinsheng.faceExam.apiTools.*;
 import org.zhouqinsheng.faceExam.model.*;
 import org.zhouqinsheng.faceExam.service.IExamAddStudentService;
 import org.zhouqinsheng.faceExam.service.IExamInfoService;
@@ -18,6 +15,7 @@ import org.zhouqinsheng.faceExam.service.IUserInfoService;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -87,7 +85,7 @@ public class YnavcController {
 	}
 
 	/**
-	 * 统计教师的待监考和未监考,本月核验人数，成功，失败
+	 * 主界面---统计教师的待监考和未监考,本月核验人数，成功，失败
 	 *
 	 * @param openId
 	 * @return
@@ -95,17 +93,18 @@ public class YnavcController {
 	@RequestMapping(value = "/examCount/{openId}", method = RequestMethod.GET)
 	public ResultModel examCount(@PathVariable("openId") String openId) {
 		try {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
 			
 			//教师信息
 			TeacherInfo teacher = teacherInfoService.findByOpenId(openId);
 
 
 			/**根据当前时间  设置该教师关联的考试状态*/
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			List<ExamInfo> allExam = examInfoService.findAllExamByTeacherId(teacher.getId());
 			for(ExamInfo e :allExam){
 				String endDate = e.getEndDate();
-				Date eDate = format.parse(endDate);
+				Date eDate = sdf.parse(endDate);
 				if (eDate.after(new Date())){
 					//待监考
 					e.setExamStatus(1);
@@ -122,6 +121,7 @@ public class YnavcController {
 
 
 			/**查询本月已经监考的场次*/
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cale = null;
 			// 获取当月第一天和最后一天
 			String firstday, lastday;
@@ -393,29 +393,34 @@ public class YnavcController {
 		if(file!=null) {
 			BufferedOutputStream bw = null;
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			String date = df.format(new Date());// n
-
+			String date = df.format(new Date());
+			FileOutputStream fos = null;
 			try {
+
 				String fileName = file.getOriginalFilename();
 				//判断是否有文件
 				if(StringUtils.isNoneBlank(fileName)) {
-					//文件名称
+					//生成文件名称
 					String imgName = date+"-"+UUID.randomUUID().toString()+
 							fileName.substring(fileName.indexOf("."));
-					//文件格式
+					//获取文件格式
 					String imageType = fileName.substring(fileName.lastIndexOf(".")+1);
 					//文件存储路径
-					String outPath = uploadPicPath+imgName;
+					String outPath = uploadPicPath+"upload/"+imgName;
 					//创建输出文件对象
 					File outFile = new File(outPath);
 					//拷贝文件到输出文件对象
 					copyInputStreamToFile(file.getInputStream(), outFile);
-					//调用检测方法
+
+					//文件上传好的路径(未压缩)
 					String path = outFile.getPath();
+					//文件压缩
+					 fos = new FileOutputStream(uploadPicPath+"resource/"+imgName);
+					ImgTools.thumbnail_w_h(new File(path),500,500,fos);
 					//System.out.println(imgName);
 					//System.out.println(path);
 					//调用人脸验证接口
-					Map<String, Object> studentMap = this.sendFaceImg(path);
+					Map<String, Object> studentMap = this.sendFaceImg(uploadPicPath+"resource/"+imgName);
 					Map<String,Object> map = new HashMap<String,Object>();
 
 					if (studentMap!=null){
@@ -424,6 +429,7 @@ public class YnavcController {
 						map.put("imgType",imageType);
 						return ResultTools.result(0, "", map);
 					}else{
+						map.put("content",null);
 						return ResultTools.result(0, "", map);
 					}
 				}
@@ -432,6 +438,7 @@ public class YnavcController {
 			} finally {
 				try {
 					if(bw!=null) {bw.close();}
+					if(fos!=null){fos.close();}
 				} catch (IOException e) {
 					return ResultTools.result(404, e.getMessage(), null);
 				}
@@ -478,7 +485,7 @@ public class YnavcController {
 		if (student!=null){
 			//成功验证学生
 			//存储图片
-			student.setImageUrl(imageName);
+			student.setImageUrl("resource/"+imageName);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			Date date = new Date();
 			String examTime = sdf.format(date);
@@ -492,7 +499,8 @@ public class YnavcController {
 			map.put("content",student);
 			return ResultTools.result(0, "", map);
 		}else{
-			return ResultTools.result(0, "", null);
+			map.put("content",null);
+			return ResultTools.result(0, "", map);
 		}
 	}
 

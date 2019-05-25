@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface IUserInfoRepository extends BaseRepository<UserInfo,Integer>,JpaSpecificationExecutor<UserInfo> {
 
+    UserInfo findByUsername(String username);
 }

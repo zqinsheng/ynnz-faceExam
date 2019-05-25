@@ -1,13 +1,14 @@
 package org.zhouqinsheng.faceExam.service;
 
-import org.zhouqinsheng.faceExam.repository.*;
-import org.zhouqinsheng.faceExam.model.*;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.zhouqinsheng.faceExam.model.UserInfo;
+import org.zhouqinsheng.faceExam.repository.IUserInfoRepository;
+
+import java.util.List;
 
 @Service
 public class UserInfoService implements IUserInfoService {
@@ -65,5 +66,11 @@ public class UserInfoService implements IUserInfoService {
 	@Override
 	public Page<UserInfo> find(Pageable page) {
 		 return userInfoRepository.findAll(page);
+	}
+
+
+	@Override
+	public UserInfo findByUsername(String username) {
+		return userInfoRepository.findByUsername(username);
 	}
 }

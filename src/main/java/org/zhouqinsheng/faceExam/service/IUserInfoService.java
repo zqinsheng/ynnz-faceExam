@@ -11,4 +11,5 @@ import org.zhouqinsheng.faceExam.model.UserInfo;
  */
 public interface IUserInfoService extends IBaseService<UserInfo,Integer> {
 
+    UserInfo findByUsername(String username);
 }
